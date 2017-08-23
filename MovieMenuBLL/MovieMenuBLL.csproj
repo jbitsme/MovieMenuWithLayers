@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MovieMenuDAL\MovieMenuDAL.csproj" />
+    <ProjectReference Include="..\MovieMenuEntity\MovieMenuEntity.csproj" />
+  </ItemGroup>
+
 </Project>

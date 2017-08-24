@@ -9,40 +9,36 @@ namespace MovieMenuBLL.Services
 {
     class MovieService : IMovieService
     {
+        IMovieRepository repo;
+
+        public MovieService(IMovieRepository repo)
+        {
+            this.repo = repo;
+        }
+
         public Movie Create(Movie mov)
         {
-            Movie newMov;
-            FakeDB.Movies.Add(newMov = new Movie()
-            {
-                Id = FakeDB.Id++,
-                Title = mov.Title,
-                Auther = mov.Auther,
-                Genre = mov.Genre,
-                Length = mov.Length
-            });
-            return newMov;
+            return repo.Create(mov);
         }
 
         public Movie Delete(int Id)
         {
-            var mov = get(Id);
-            FakeDB.Movies.Remove(mov);
-            return mov;
+           return  repo.Delete(Id);
         }
 
-        public Movie get(int Id)
+        public Movie Get(int Id)
         {
-            return FakeDB.Movies.FirstOrDefault(x => x.Id == Id);
+            return repo.Get(Id);
         }
 
         public IEnumerable<Movie> getAll()
         {
-            return new List<Movie> (FakeDB.Movies);
+            return repo.getAll();
         }
 
         public Movie Update(Movie mov)
         {
-            var movieFromDB = get(mov.Id);
+            var movieFromDB = Get(mov.Id);
             if(movieFromDB == null)
             {
                 throw new InvalidOperationException("Movie Not Found");
@@ -63,6 +59,11 @@ namespace MovieMenuBLL.Services
                     Console.WriteLine(($"Id: {Movie.Id} Name: {Movie.Title} Auther: {Movie.Auther} Genre: {Movie.Genre} Length: {Movie.Length}\n"));
                 }
             }
+        }
+
+        public Movie get(int Id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

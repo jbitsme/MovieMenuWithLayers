@@ -93,7 +93,7 @@ namespace MovieMenuUI
             Console.WriteLine("Please Select The Id Of The Movie You Want To Edit: ");
             var movie = FindingMovieById();
 
-            if(movie != null)
+            if (movie != null)
             {
                 Console.WriteLine();
                 Console.WriteLine("Title: ");
@@ -107,8 +107,13 @@ namespace MovieMenuUI
 
                 Console.WriteLine("Length: ");
                 movie.Length = Console.ReadLine();
+
+                BllFacade.MovieService.Update(movie);
             }
-            Console.WriteLine("Please Use A Valid Id \n");
+            else
+            {
+                Console.WriteLine("Please Use A Valid Id \n");
+            }
         }
 
         private static void DeleteMovie()

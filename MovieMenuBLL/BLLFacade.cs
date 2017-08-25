@@ -10,7 +10,7 @@ namespace MovieMenuBLL
     {
         public IMovieService MovieService
         {
-            get { return new MovieService(new DALFacade().MovieRepository); }
+            get { return new MovieService(new DALFacade()); }
         }
     }
 }

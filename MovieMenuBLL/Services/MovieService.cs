@@ -9,45 +9,65 @@ namespace MovieMenuBLL.Services
 {
     class MovieService : IMovieService
     {
-        IMovieRepository repo;
-
-        public MovieService(IMovieRepository repo)
+        DALFacade facade;
+        public MovieService(DALFacade facade)
         {
-            this.repo = repo;
+            this.facade = facade;
         }
 
         public Movie Create(Movie mov)
         {
-            return repo.Create(mov);
+            using (var uow = facade.UniteOfWork)
+            {
+                var newMov = uow.MovieRepository.Create(mov);
+                uow.Complete();
+                return newMov;
+            }
         }
 
         public Movie Delete(int Id)
         {
-           return  repo.Delete(Id);
+            using (var uow = facade.UniteOfWork)
+            {
+                var newMov = uow.MovieRepository.Delete(Id);
+                uow.Complete();
+                return newMov;
+            }
         }
 
-        public Movie Get(int Id)
+        public Movie get(int Id)
         {
-            return repo.Get(Id);
+            using (var uow = facade.UniteOfWork)
+            {
+                return uow.MovieRepository.Get(Id);
+            }
         }
 
         public IEnumerable<Movie> getAll()
         {
-            return repo.getAll();
+            using (var uow = facade.UniteOfWork)
+            {
+                return uow.MovieRepository.getAll();
+            }
         }
 
         public Movie Update(Movie mov)
         {
-            var movieFromDB = Get(mov.Id);
-            if(movieFromDB == null)
+            using (var uow = facade.UniteOfWork)
             {
-                throw new InvalidOperationException("Movie Not Found");
+                var movieFromDB = uow.MovieRepository.Get(mov.Id);
+                if (movieFromDB == null)
+                {
+                    throw new InvalidOperationException("Movie Not Found");
+                }
+                movieFromDB.Title = mov.Title;
+                movieFromDB.Auther = mov.Auther;
+                movieFromDB.Genre = mov.Genre;
+                movieFromDB.Length = mov.Length;
+                uow.Complete();
+                return movieFromDB;
             }
-            movieFromDB.Title = mov.Title;
-            movieFromDB.Auther = mov.Auther;
-            movieFromDB.Genre = mov.Genre;
-            movieFromDB.Length = mov.Length;
-            return movieFromDB;
+            
         }
 
         public void Search(string filter)
@@ -59,11 +79,6 @@ namespace MovieMenuBLL.Services
                     Console.WriteLine(($"Id: {Movie.Id} Name: {Movie.Title} Auther: {Movie.Auther} Genre: {Movie.Genre} Length: {Movie.Length}\n"));
                 }
             }
-        }
-
-        public Movie get(int Id)
-        {
-            throw new NotImplementedException();
         }
     }
 }

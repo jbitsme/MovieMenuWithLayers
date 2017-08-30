@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MovieMenuEntity;
+using MovieMenuDAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;

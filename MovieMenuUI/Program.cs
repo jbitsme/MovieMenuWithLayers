@@ -1,5 +1,6 @@
 ﻿using MovieMenuBLL;
-using MovieMenuEntity;
+using MovieMenuBLL.BO;
+using MovieMenuDAL.Entities;
 using System;
 using System.Collections.Generic;
 
@@ -7,21 +8,21 @@ namespace MovieMenuUI
 {
     public class Program
     {
-        static BLLFacade BllFacade = new BLLFacade();
+        static BLLFacade bllFacade = new BLLFacade();
         static void Main(string[] args)
         {
 
 
-            var movie1 = new Movie
+            var movie1 = new MovieBO
             {
                 Title = "Shark night",
                 Auther = "John John",
                 Genre = "Horror",
                 Length = "1.5 Hours"
             };
-            BllFacade.MovieService.Create(movie1);
+            bllFacade.MovieService.Create(movie1);
 
-            BllFacade.MovieService.Create(new Movie()
+            bllFacade.MovieService.Create(new MovieBO()
             {
                 Title = "A World Outside",
                 Auther = "Frank Darabont",
@@ -85,7 +86,7 @@ namespace MovieMenuUI
             {
                 Console.WriteLine("Please Insert A Number");
             }
-            return BllFacade.MovieService.get(id);
+            return bllFacade.MovieService.get(id);
         }
 
         private static void EditMovie()
@@ -108,7 +109,7 @@ namespace MovieMenuUI
                 Console.WriteLine("Length: ");
                 movie.Length = Console.ReadLine();
 
-                BllFacade.MovieService.Update(movie);
+                bllFacade.MovieService.Update(movie);
             }
             else
             {
@@ -123,7 +124,7 @@ namespace MovieMenuUI
 
             if(movieFound != null)
             {
-                BllFacade.MovieService.Delete(movieFound.Id);
+                bllFacade.MovieService.Delete(movieFound.Id);
             }
             
             var response = movieFound == null ? "Please Use A Valid Id \n" : "The Movie Was Deleted \n";
@@ -146,7 +147,7 @@ namespace MovieMenuUI
             Console.WriteLine("Length: ");
             var Length = Console.ReadLine();
 
-            BllFacade.MovieService.Create(new Movie()
+            bllFacade.MovieService.Create(new MovieBO()
             {
                 Title = Title,
                 Auther = Auther,
@@ -158,7 +159,7 @@ namespace MovieMenuUI
         private static void listMovies()
         {
             Console.WriteLine("\nList Of Movies \n");
-            foreach (var Movie in BllFacade.MovieService.getAll())
+            foreach (var Movie in bllFacade.MovieService.getAll())
             {
                 Console.WriteLine($"Id: {Movie.Id} Name: {Movie.Title} Auther: {Movie.Auther} Genre: {Movie.Genre} Length: {Movie.Length}");
                 Console.WriteLine("");
@@ -192,7 +193,7 @@ namespace MovieMenuUI
             var searchQuery = Console.ReadLine();
             Console.WriteLine("");
 
-            BllFacade.MovieService.Search(searchQuery);
+            bllFacade.MovieService.Search(searchQuery);
         }
 
     }

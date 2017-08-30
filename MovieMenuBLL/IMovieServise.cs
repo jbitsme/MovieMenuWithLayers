@@ -1,21 +1,19 @@
-﻿using MovieMenuEntity;
-using System;
+﻿using MovieMenuBLL.BO;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MovieMenuBLL
 {
     public interface IMovieService
     {
         //Create movie
-        Movie Create(Movie mov);
+        MovieBO Create(MovieBO mov);
         //Read
-        IEnumerable<Movie> getAll();
+        IEnumerable<MovieBO> getAll();
         void Search(string filter);
-        Movie get(int Id);
+        MovieBO get(int Id);
         //Edit
-        Movie Update(Movie mov);
+        MovieBO Update(MovieBO mov);
         //Delete
-        Movie Delete(int Id);
+        MovieBO Delete(int Id);
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using MovieMenuEntity;
 using MovieMenuDAL;
 using System.Linq;
+using MovieMenuBLL.BO;
+using MovieMenuDAL.Entities;
 
 namespace MovieMenuBLL.Services
 {
@@ -15,43 +15,43 @@ namespace MovieMenuBLL.Services
             this.facade = facade;
         }
 
-        public Movie Create(Movie mov)
+        public MovieBO Create(MovieBO mov)
         {
             using (var uow = facade.UniteOfWork)
             {
-                var newMov = uow.MovieRepository.Create(mov);
+                var newMov = uow.MovieRepository.Create(Convert(mov));
                 uow.Complete();
-                return newMov;
+                return Convert(newMov);
             }
         }
 
-        public Movie Delete(int Id)
+        public MovieBO Delete(int Id)
         {
             using (var uow = facade.UniteOfWork)
             {
                 var newMov = uow.MovieRepository.Delete(Id);
                 uow.Complete();
-                return newMov;
+                return Convert(newMov);
             }
         }
 
-        public Movie get(int Id)
+        public MovieBO get(int Id)
         {
             using (var uow = facade.UniteOfWork)
             {
-                return uow.MovieRepository.Get(Id);
+                return Convert(uow.MovieRepository.Get(Id));
             }
         }
 
-        public IEnumerable<Movie> getAll()
+        public IEnumerable<MovieBO> getAll()
         {
             using (var uow = facade.UniteOfWork)
             {
-                return uow.MovieRepository.getAll();
+                return uow.MovieRepository.getAll().Select(m => Convert(m)).ToList();
             }
         }
 
-        public Movie Update(Movie mov)
+        public MovieBO Update(MovieBO mov)
         {
             using (var uow = facade.UniteOfWork)
             {
@@ -65,20 +65,44 @@ namespace MovieMenuBLL.Services
                 movieFromDB.Genre = mov.Genre;
                 movieFromDB.Length = mov.Length;
                 uow.Complete();
-                return movieFromDB;
+                return Convert(movieFromDB);
             }
             
         }
 
         public void Search(string filter)
         {
-            foreach (Movie Movie in getAll())
+            foreach (MovieBO Movie in getAll())
             {
                 if (Movie.Title.ToLower().Contains(filter.ToLower()))
                 {
                     Console.WriteLine(($"Id: {Movie.Id} Name: {Movie.Title} Auther: {Movie.Auther} Genre: {Movie.Genre} Length: {Movie.Length}\n"));
                 }
             }
+        }
+
+        private Movie Convert(MovieBO mov)
+        {
+            return new Movie()
+            {
+                Id = mov.Id,
+                Title = mov.Title,
+                Auther = mov.Auther,
+                Length = mov.Length,
+                Genre = mov.Genre
+            };
+        }
+
+        private MovieBO Convert(Movie mov)
+        {
+            return new MovieBO()
+            {
+                Id = mov.Id,
+                Title = mov.Title,
+                Auther = mov.Auther,
+                Length = mov.Length,
+                Genre = mov.Genre
+            };
         }
     }
 }

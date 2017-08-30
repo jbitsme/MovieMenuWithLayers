@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using MovieMenuEntity;
 using MovieMenuDAL.Context;
 using System.Linq;
+using MovieMenuDAL.Entities;
 
 namespace MovieMenuDAL.Repositories
 {

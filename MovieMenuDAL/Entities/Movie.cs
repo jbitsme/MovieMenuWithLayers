@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MovieMenuEntity
+namespace MovieMenuDAL.Entities
 {
     public class Movie
     {

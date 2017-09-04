@@ -1,6 +1,5 @@
 ﻿using MovieMenuBLL;
 using MovieMenuBLL.BO;
-using MovieMenuDAL.Entities;
 using System;
 using System.Collections.Generic;
 
@@ -77,7 +76,7 @@ namespace MovieMenuUI
             Console.ReadLine();
         }
 
-        private static Movie FindingMovieById()
+        private static MovieBO FindingMovieById()
         {
 
             listMovies();

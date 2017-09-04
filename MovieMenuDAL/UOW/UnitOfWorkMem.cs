@@ -9,12 +9,14 @@ namespace MovieMenuDAL.UOW
     class UnitOfWorkMem : IUnitOfWork
     {
         public IMovieRepository MovieRepository { get; internal set; }
+        public IGenreRepository GenreRepository { get; internal set; }
         private InMemoryContext context;
 
         public UnitOfWorkMem()
         {
             context = new InMemoryContext();
             MovieRepository = new MovieRepositoryEFMemory(context);
+            GenreRepository = new GenreRepositoryEFMemory(context);
         }
 
         public int Complete()

@@ -12,5 +12,10 @@ namespace MovieMenuBLL
         {
             get { return new MovieService(new DALFacade()); }
         }
+
+        public IGenreService GenreService
+        {
+            get { return new GenreService(new DALFacade()); }
+        }
     }
 }

@@ -7,6 +7,8 @@ namespace MovieMenuDAL
     public interface IUnitOfWork : IDisposable
     {
         IMovieRepository MovieRepository { get; }
+        IGenreRepository GenreRepository { get; }
+
         int Complete();
     }
 }

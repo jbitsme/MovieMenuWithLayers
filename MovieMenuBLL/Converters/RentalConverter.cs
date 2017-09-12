@@ -18,7 +18,7 @@ namespace MovieMenuBLL.Converters
             };
         }
 
-        internal RentalBO Convert(Rental rental)
+        internal RentalBO convert(Rental rental)
         {
             return new RentalBO()
             {

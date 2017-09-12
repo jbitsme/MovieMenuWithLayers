@@ -8,6 +8,8 @@ namespace MovieMenuBLL.Converters
 {
     class MovieConverter
     {
+
+
         internal Movie convert(MovieBO mov)
         {
             return new Movie()
@@ -20,7 +22,7 @@ namespace MovieMenuBLL.Converters
             };
         }
 
-        private MovieBO Convert(Movie mov)
+        internal MovieBO convert(Movie mov)
         {
             return new MovieBO()
             {

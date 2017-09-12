@@ -4,11 +4,13 @@ using MovieMenuDAL;
 using System.Linq;
 using MovieMenuBLL.BO;
 using MovieMenuDAL.Entities;
+using MovieMenuBLL.Converters;
 
 namespace MovieMenuBLL.Services
 {
     class MovieService : IMovieService
     {
+        MovieConverter conv = new MovieConverter();
         DALFacade facade;
         public MovieService(DALFacade facade)
         {
@@ -19,9 +21,9 @@ namespace MovieMenuBLL.Services
         {
             using (var uow = facade.UniteOfWork)
             {
-                var newMov = uow.MovieRepository.Create(Convert(mov));
+                var newMov = uow.MovieRepository.Create(conv.convert(mov));
                 uow.Complete();
-                return Convert(newMov);
+                return conv.convert(newMov);
             }
         }
 
@@ -31,7 +33,7 @@ namespace MovieMenuBLL.Services
             {
                 var newMov = uow.MovieRepository.Delete(Id);
                 uow.Complete();
-                return Convert(newMov);
+                return conv.convert(newMov);
             }
         }
 
@@ -39,7 +41,7 @@ namespace MovieMenuBLL.Services
         {
             using (var uow = facade.UniteOfWork)
             {
-                return Convert(uow.MovieRepository.Get(Id));
+                return conv.convert(uow.MovieRepository.Get(Id));
             }
         }
 
@@ -47,7 +49,7 @@ namespace MovieMenuBLL.Services
         {
             using (var uow = facade.UniteOfWork)
             {
-                return uow.MovieRepository.getAll().Select(m => Convert(m)).ToList();
+                return uow.MovieRepository.getAll().Select(m => conv.convert(m)).ToList();
             }
         }
 
@@ -65,7 +67,7 @@ namespace MovieMenuBLL.Services
                 movieFromDB.Genre = mov.Genre;
                 movieFromDB.Length = mov.Length;
                 uow.Complete();
-                return Convert(movieFromDB);
+                return conv.convert(movieFromDB);
             }
             
         }
@@ -79,30 +81,6 @@ namespace MovieMenuBLL.Services
                     Console.WriteLine(($"Id: {Movie.Id} Name: {Movie.Title} Auther: {Movie.Auther} Genre: {Movie.Genre} Length: {Movie.Length}\n"));
                 }
             }
-        }
-
-        private Movie Convert(MovieBO mov)
-        {
-            return new Movie()
-            {
-                Id = mov.Id,
-                Title = mov.Title,
-                Auther = mov.Auther,
-                Length = mov.Length,
-                Genre = mov.Genre
-            };
-        }
-
-        private MovieBO Convert(Movie mov)
-        {
-            return new MovieBO()
-            {
-                Id = mov.Id,
-                Title = mov.Title,
-                Auther = mov.Auther,
-                Length = mov.Length,
-                Genre = mov.Genre
-            };
         }
     }
 }

@@ -7,7 +7,7 @@ namespace MovieMenuBLL.BO
     public class RentalBO
     {
         public int Id { get; set; }
-        public string FromDate { get; set; }
-        public string ToDate { get; set; }
+        public DateTime From { get; set; }
+        public DateTime To { get; set; }
     }
 }

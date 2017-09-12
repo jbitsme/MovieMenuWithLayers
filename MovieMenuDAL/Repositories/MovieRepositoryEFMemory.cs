@@ -9,9 +9,9 @@ namespace MovieMenuDAL.Repositories
 {
     class MovieRepositoryEFMemory : IMovieRepository
     {
-        InMemoryContext _context;
+        MovieContext _context;
 
-        public  MovieRepositoryEFMemory(InMemoryContext context)
+        public  MovieRepositoryEFMemory(MovieContext context)
         {
             _context = context;
         }

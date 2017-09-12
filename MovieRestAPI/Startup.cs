@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using MovieMenuBLL;
+using MovieMenuBLL.BO;
 
 namespace MovieRestAPI
 {
@@ -32,6 +34,19 @@ namespace MovieRestAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                var facade = new BLLFacade();
+                facade.MovieService.Create(new MovieBO()
+                {
+                    Title = "lars",
+                    Auther = "larsen",
+                    Genre = "horror"
+                });
+                facade.MovieService.Create(new MovieBO()
+                {
+                    Title = "bo",
+                    Auther = "bine",
+                    Genre = "horror"
+                });
             }
 
             app.UseMvc();
